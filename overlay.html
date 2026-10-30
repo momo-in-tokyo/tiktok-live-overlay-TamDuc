@@ -78,6 +78,7 @@ const CFG = {
         : 'wss://my-tiktok-bot.onrender.com', // <--- Thay 'my-tiktok-bot' bằng tên app thật của bạn trên Render sau khi tạo xong
     BLESS_MS: 60*1000,          // 1 phút/lượt, mỗi lượt đọc 1 câu
     MAX_FIGURES: 30,          // tối đa 30 người đang hiển thị, vào trước ra trước
+    GOLD_TO_TAMDUC: 50,       // 1 vàng = 50 điểm Tâm Đức
     BUBBLE_MS: 6000
 };
 const BLESSINGS=["Nam Mô A Di Đà Phật!","Nguyện đem công đức này hướng về khắp tất cả.","Nam Mô Đại Từ Đại Bi Quán Thế Âm Bồ Tát!",
@@ -133,7 +134,7 @@ function handle(e){
   addScore(e.uid,e.name,1);
   say(spawn(e.uid,e.name),e.text||e.name);
  }else if(e.type==='gift'){                // 1 vàng = 1 Tâm Đức, không sinh hình nhân
-  const g=Math.max(0,+e.gold||0);addScore(e.uid,e.name,g);
+  const g=Math.max(0,+e.gold||0)*CFG.GOLD_TO_TAMDUC;addScore(e.uid,e.name,g);
   const f=figs.get(e.uid);if(f)say(f,'+'+g+' tâm đức');
  } // join/leave: bỏ qua, điểm giữ nguyên cả phiên
 }

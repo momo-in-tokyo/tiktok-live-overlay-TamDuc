@@ -1,12 +1,16 @@
 // Cầu nối TikTok Live -> Overlay (WebSocket cục bộ)
 // Chạy: npm i tiktok-live-connector ws   rồi   node server.js <tiktok_username>
+const http = require('http');
 const { WebSocketServer } = require('ws');
 const L = require('tiktok-live-connector');
 const Conn = L.WebcastPushConnection || L.TikTokLiveConnection;
-const user = process.argv[2];
-if (!user) { console.error('Dùng: node server.js <tiktok_username>'); process.exit(1); }
+const user = process.argv[2] || process.env.TIKTOK_USERNAME;
+if (!user) { console.error('Dùng: node server.js <tiktok_username> (hoặc đặt biến môi trường TIKTOK_USERNAME)'); process.exit(1); }
 
-const wss = new WebSocketServer({ port: 8765 });
+const PORT = process.env.PORT || 8765;            // Render cấp PORT qua biến môi trường
+const srv = http.createServer((q, r) => { r.writeHead(200); r.end('ok'); }); // để Render kiểm tra sống
+const wss = new WebSocketServer({ server: srv });
+srv.listen(PORT);
 const send = (o) => wss.clients.forEach((c) => c.readyState === 1 && c.send(JSON.stringify(o)));
 const who = (d) => ({ uid: String(d.userId || d.uniqueId), name: d.nickname || d.uniqueId });
 
@@ -23,4 +27,4 @@ live.on('gift',   (d) => {
 });
 live.on('disconnected', () => setTimeout(connect, 5000));
 connect();
-console.log('Overlay WebSocket: ws://localhost:8765');
+console.log('Overlay WebSocket đang chạy ở cổng', PORT);
