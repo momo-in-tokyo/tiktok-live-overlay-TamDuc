@@ -2,10 +2,14 @@
   "name": "tiktok-live-overlay-tamduc",
   "version": "1.0.0",
   "main": "server.js",
-  "scripts": { "start": "node server.js" },
-  "engines": { "node": ">=18" },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
   "dependencies": {
-    "tiktok-live-connector": "1.2.3",
+    "tiktok-live-connector": "2.5.0",
     "ws": "^8.18.0"
   }
 }
