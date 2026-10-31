@@ -3,75 +3,82 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Điện Phật – Tương tác TikTok Live</title>
 <style>
-:root{--gold:#f3c969;--gold2:#a8741a;--lac:#7a1410;--wood:#2a140b;--ink:#fff4d6;--paper:#fff3d9}
+:root{--gold:#f3c969;--gold2:#a8741a;--ink:#fff4d6;--paper:#fff3d9}
 *{box-sizing:border-box;margin:0}
 html,body{height:100%;background:#000;overflow:hidden;font-family:"Be Vietnam Pro","Segoe UI",system-ui,sans-serif}
-#stage{position:relative;height:100vh;aspect-ratio:9/16;max-width:100vw;margin:auto;overflow:hidden;
+/* Mọi kích thước tính theo em: 1em = 1/54 bề rộng khung, nên giao diện co giãn đúng ở mọi màn hình */
+#stage{position:relative;height:100vh;aspect-ratio:9/16;max-width:100vw;margin:auto;overflow:hidden;font-size:min(1.0417vh,1.852vw);
  background:linear-gradient(#1a0c06 0,#3a1b0c 45%,#5a2a10 100%)}
-#halo{position:absolute;left:50%;top:30%;width:120%;aspect-ratio:1;transform:translate(-50%,-50%);
- background:radial-gradient(circle,#fff0b0 0,#f7c853 18%,rgba(214,140,30,.55) 38%,transparent 66%);animation:glow 6s ease-in-out infinite}
+#halo{position:absolute;left:50%;top:19%;width:110%;aspect-ratio:1;transform:translate(-50%,-50%);
+ background:radial-gradient(circle,#fff0b0 0,#f7c853 16%,rgba(214,140,30,.5) 36%,transparent 64%);animation:glow 6s ease-in-out infinite}
 @keyframes glow{50%{opacity:.78;transform:translate(-50%,-50%) scale(1.06)}}
-#buddha{position:absolute;left:50%;top:12%;width:44%;transform:translateX(-50%);filter:drop-shadow(0 0 24px #ffd36a)}
-#carpet{position:absolute;left:0;right:0;top:36%;bottom:0;background:linear-gradient(#6d0f0c,#a3161a);
- clip-path:polygon(40% 0,60% 0,100% 100%,0 100%);box-shadow:inset 0 0 0 4px var(--gold2)}
-#carpet::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 38px,rgba(243,201,105,.18) 38px 40px)}
-#people{position:absolute;inset:0}
-.p{position:absolute;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;transition:left .5s,top .5s}
-.p svg{display:block}
-.p .n{max-width:34vw;color:var(--ink);font-size:11px;font-weight:600;text-shadow:0 1px 3px #000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.b{background:var(--paper);color:#3b1d0a;border:2px solid var(--gold2);border-radius:12px;padding:3px 9px;font-size:12px;font-weight:600;
- max-width:40vw;margin-bottom:3px;text-align:center;animation:pop .25s ease-out;word-break:break-word}
-@keyframes pop{from{transform:scale(.4);opacity:0}}
-.p.bow svg{animation:bow .9s ease-in-out}
-@keyframes bow{40%{transform:translateY(5px) scaleY(.92)}}
-#board{position:absolute;left:3%;top:8%;width:46%;background:rgba(30,14,8,.82);border:2px solid var(--gold2);border-radius:10px;padding:8px}
-#board h2{font-size:13px;color:var(--gold);margin-bottom:2px}
-#board small{display:block;font-size:9px;color:#d9b66a;margin-bottom:6px}
-#board li{list-style:none;display:flex;justify-content:space-between;gap:6px;font-size:12px;color:var(--ink);
- padding:4px 7px;margin-top:3px;border:1px solid rgba(243,201,105,.5);border-radius:7px}
-#board li span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-#board li b{color:var(--gold);white-space:nowrap}
-#board li{position:relative}
-#board li.r1{color:#3a2300;font-weight:700;background:linear-gradient(100deg,#fff0a8,#f3c969 45%,#d9a024);border:2px solid #ffe38a;box-shadow:0 0 12px rgba(255,214,90,.75)}
-#board li.r1 b{color:#6b3c00}
-#board li.r1::before{content:"";position:absolute;right:-7px;top:-12px;width:24px;height:18px;
- background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 18'><g fill='%23ffd9e6' stroke='%23c2185b' stroke-width='.8'><path d='M12 17C8 14 8 7 12 2c4 5 4 12 0 15z'/><path d='M11 17C6 16 2 11 2 6c5 0 9 4 9 11z'/><path d='M13 17c5-1 9-6 9-11-5 0-9 4-9 11z'/></g></svg>") center/contain no-repeat}
-#board li.r2{color:#1f2630;font-weight:700;background:linear-gradient(100deg,#f4f7fb,#c9d1da 50%,#98a3b0);border:2px solid #e8edf3}
-#board li.r2 b{color:#2f3a48}
-#board li.r3{color:#2b1405;font-weight:700;background:linear-gradient(100deg,#f0b27a,#cd7f32 50%,#8f5320);border:2px solid #e2a066}
-#board li.r3 b{color:#3d1d08}
-#board .empty{opacity:.6;border-style:dashed}
-#monk{position:absolute;left:5%;top:37%;width:15%;display:flex;flex-direction:column;align-items:center}
-#bless{position:absolute;left:0;bottom:100%;margin-bottom:7px;width:225%;background:var(--paper);color:#3b1d0a;border:2px solid var(--gold2);border-radius:10px;padding:6px 8px;font-size:11px;font-weight:600;line-height:1.35;text-align:center;opacity:0;transition:opacity .6s}
-#bless::after{content:'';position:absolute;left:22px;top:100%;border:7px solid transparent;border-top-color:var(--gold2)}
-#bless.on{opacity:1}
-#monk svg{width:100%;animation:tap 1.1s steps(2) infinite}
-@keyframes tap{50%{transform:translateY(2px)}}
-#monk em{font-style:normal;font-size:10px;color:var(--ink);background:#7a4a14;border-radius:8px;padding:1px 8px;margin-top:2px}
-#status{position:absolute;right:6px;bottom:6px;font-size:10px;color:#fff9;z-index:5}
-/* bảng vàng: avatar + tên + điểm */
-#board{width:52%}
-#board ol{padding:0;margin:0}
-#board li{padding:4px 6px;align-items:center;justify-content:flex-start}
-#board li .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.av{width:22px;height:22px;border-radius:50%;flex:none;object-fit:cover;background:rgba(255,255,255,.22);display:grid;place-items:center;font-size:11px;font-weight:800;color:#fff;border:1px solid rgba(255,255,255,.55)}
-#board li.r1 .av,#board li.r2 .av,#board li.r3 .av{color:#3a2300}
-/* thanh tim trên đầu nhân vật */
-.hb{width:46px;height:8px;border:1.5px solid #fff;border-radius:6px;background:rgba(0,0,0,.55);overflow:hidden;margin:0 auto 3px;position:relative}
-.hb i{display:block;height:100%;width:0;background:linear-gradient(90deg,#ff9cc2,#ff3d86);transition:width .3s}
-.hb::after{content:"♥";position:absolute;left:50%;top:50%;transform:translate(-50%,-54%);font-size:7px;color:#fff;line-height:1}
-.hb.full{box-shadow:0 0 9px #ff4f9a;animation:hpulse .7s ease-in-out infinite}
-@keyframes hpulse{50%{transform:scale(1.15)}}
-.sc{transition:transform 1s}
-.p.walk{transition:left 1.1s ease-in-out,top 1.1s ease-in-out}
-/* lư hương giữa điện */
-#burner{position:absolute;left:50%;top:51%;width:17%;transform:translate(-50%,-100%);z-index:50;filter:drop-shadow(0 4px 6px #000a)}
+#buddha{position:absolute;left:50%;top:6%;width:32%;transform:translateX(-50%);filter:drop-shadow(0 0 2.4em #ffd36a)}
+#carpet{position:absolute;left:0;right:0;top:28%;bottom:0;background:linear-gradient(#6d0f0c,#a3161a);
+ clip-path:polygon(40% 0,60% 0,100% 100%,0 100%);box-shadow:inset 0 0 0 .4em var(--gold2)}
+#carpet::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 3.8em,rgba(243,201,105,.18) 3.8em 4em)}
+/* lư hương */
+#burner{position:absolute;left:50%;top:41%;width:14%;transform:translate(-50%,-100%);z-index:50;filter:drop-shadow(0 .4em .6em #000a)}
 #burner .tip{fill:#5a2a10;transition:fill .4s}
-#burner.lit .tip{fill:#ff5a1f;filter:drop-shadow(0 0 4px #ff8a3c)}
+#burner.lit .tip{fill:#ff5a1f;filter:drop-shadow(0 0 .4em #ff8a3c)}
 #burner .sm{opacity:0;fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round}
 #burner.lit .sm{animation:smoke 2.4s ease-out infinite}
 #burner.lit .sm:nth-of-type(2){animation-delay:.8s}#burner.lit .sm:nth-of-type(3){animation-delay:1.6s}
-@keyframes smoke{0%{opacity:.7;transform:translateY(0)}100%{opacity:0;transform:translateY(-34px)}}
+@keyframes smoke{0%{opacity:.7;transform:translateY(0)}100%{opacity:0;transform:translateY(-3.4em)}}
+/* người đi lễ */
+#people{position:absolute;inset:0}
+.p{position:absolute;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;transition:left .5s,top .5s}
+.p svg{display:block}
+.sc svg{width:4.6em;height:5.2em}
+.sc{transition:transform 1s}
+.p .n{max-width:9em;color:var(--ink);font-size:1em;font-weight:600;text-shadow:0 .1em .3em #000,0 0 .2em #000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.b{background:var(--paper);color:#3b1d0a;border:.2em solid var(--gold2);border-radius:.9em;padding:.15em .55em;font-size:.95em;font-weight:600;line-height:1.2;
+ max-width:12em;margin-bottom:.3em;text-align:center;animation:pop .25s ease-out;word-break:break-word;
+ display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+@keyframes pop{from{transform:scale(.4);opacity:0}}
+.p.bow svg{animation:bow .9s ease-in-out}
+@keyframes bow{40%{transform:translateY(.5em) scaleY(.92)}}
+.p.walk{transition:left 1.1s ease-in-out,top 1.1s ease-in-out}
+.p.guest{transition:left 1.6s ease-in-out,top 1.6s ease-in-out,opacity .6s;opacity:0}
+.p.guest.in{opacity:1}
+/* thanh tim */
+.hb{width:5em;height:1em;border:.15em solid #fff;border-radius:.6em;background:#fff;box-shadow:0 .1em .3em #000a;overflow:hidden;margin:0 auto .3em;position:relative}
+.hb i{display:block;height:100%;width:0;background:linear-gradient(90deg,#ff9cc2,#ff2f7d);transition:width .35s ease}
+.hb::after{content:"♥";position:absolute;left:50%;top:50%;transform:translate(-50%,-52%);font-size:.8em;color:#e8467c;line-height:1;text-shadow:0 0 .2em #fff}
+.hb.full{box-shadow:0 0 .9em #ff4f9a;animation:hpulse .7s ease-in-out infinite}
+@keyframes hpulse{50%{transform:scale(1.15)}}
+/* bảng vàng: gọn, nằm trên cùng, không che tượng Phật */
+#board{position:absolute;left:2.5%;top:2%;width:31%;z-index:60;background:rgba(30,14,8,.88);border:.2em solid var(--gold2);border-radius:1em;padding:.6em .6em .5em}
+#board header{display:block;margin-bottom:.5em}
+#board h2{font-size:1.1em;color:var(--gold);letter-spacing:0;white-space:nowrap}
+#board small{display:block;font-size:.95em;color:#d9b66a}
+#board ol{padding:0;margin:0;display:grid;gap:.35em}
+#board li{list-style:none;position:relative;display:grid;grid-template-columns:2em 1fr;column-gap:.5em;align-items:center;padding:.3em .5em;font-size:1.1em;color:var(--ink);border:.08em solid rgba(243,201,105,.5);border-radius:.7em}
+#board li .av{grid-row:1/3}
+#board li .empty-av{grid-row:1/3}
+#board li b{grid-column:2;font-size:.95em}
+#board li .nm{grid-column:2;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#board li b{color:var(--gold);white-space:nowrap}
+#board .empty{opacity:.55;border-style:dashed}
+.av{width:2em;height:2em;border-radius:50%;flex:none;object-fit:cover;background:rgba(255,255,255,.22);display:grid;place-items:center;font-size:.8em;font-weight:800;color:#fff;border:.08em solid rgba(255,255,255,.55)}
+#board li.r1{color:#3a2300;font-weight:700;background:linear-gradient(100deg,#fff0a8,#f3c969 45%,#d9a024);border:.15em solid #ffe38a;box-shadow:0 0 1em rgba(255,214,90,.75)}
+#board li.r1 b{color:#6b3c00}
+#board li.r1::before{content:"";position:absolute;right:-.4em;top:-.8em;width:2.1em;height:1.6em;
+ background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 18'><g fill='%23ffd9e6' stroke='%23c2185b' stroke-width='.8'><path d='M12 17C8 14 8 7 12 2c4 5 4 12 0 15z'/><path d='M11 17C6 16 2 11 2 6c5 0 9 4 9 11z'/><path d='M13 17c5-1 9-6 9-11-5 0-9 4-9 11z'/></g></svg>") center/contain no-repeat}
+#board li.r2{color:#1f2630;font-weight:700;background:linear-gradient(100deg,#f4f7fb,#c9d1da 50%,#98a3b0);border:.15em solid #e8edf3}
+#board li.r2 b{color:#2f3a48}
+#board li.r3{color:#2b1405;font-weight:700;background:linear-gradient(100deg,#f0b27a,#cd7f32 50%,#8f5320);border:.15em solid #e2a066}
+#board li.r3 b{color:#3d1d08}
+#board li.r1 .av,#board li.r2 .av,#board li.r3 .av{color:#3a2300}
+/* chú tiểu: bên trái tượng Phật, lời chúc ngay trên đầu, không đè bảng vàng */
+#monk{position:absolute;right:4%;top:24%;width:14%;display:flex;flex-direction:column;align-items:center;z-index:40}
+#monk svg{width:100%;display:block;animation:tap 1.1s steps(2) infinite}
+@keyframes tap{50%{transform:translateY(.2em)}}
+#monk em{font-style:normal;font-size:1em;color:var(--ink);background:#7a4a14;border-radius:.8em;padding:.1em .8em;margin-top:.2em;white-space:nowrap}
+#bless{position:absolute;right:0;bottom:100%;margin-bottom:.8em;width:190%;background:var(--paper);color:#3b1d0a;border:.2em solid var(--gold2);border-radius:.9em;
+ padding:.5em .7em;font-size:1.05em;font-weight:600;line-height:1.35;text-align:center;opacity:0;transition:opacity .6s}
+#bless.on{opacity:1}
+#bless::after{content:'';position:absolute;right:2em;top:100%;border:.7em solid transparent;border-top-color:var(--gold2)}
+#status{position:absolute;right:.6em;bottom:.6em;font-size:1em;color:#fff9;z-index:5}
 @media (prefers-reduced-motion:reduce){*{animation:none!important}}
 </style></head><body>
 <div id="stage">
@@ -94,7 +101,7 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:"Be Vietnam Pr
   <path d="M30 80l-6 14M70 80l6 14M50 84v12" stroke="#b8801f" stroke-width="6" stroke-linecap="round"/>
  </svg>
  <div id="people"></div>
- <aside id="board"><h2>BẢNG VÀNG TÂM ĐỨC</h2><small>Top 5 tâm đức</small><ol id="rank"></ol></aside>
+ <aside id="board"><header><h2>BẢNG VÀNG TÂM ĐỨC</h2><small>Top 5 tâm đức</small></header><ol id="rank"></ol></aside>
  <div id="monk">
   <svg viewBox="0 0 80 90"><circle cx="40" cy="20" r="13" fill="#e9b98a"/><path d="M12 84q2-48 28-48t28 48z" fill="#e0a021"/><circle cx="62" cy="68" r="9" fill="#8a4b14"/></svg>
   <em>Chú tiểu</em>
@@ -105,7 +112,7 @@ html,body{height:100%;background:#000;overflow:hidden;font-family:"Be Vietnam Pr
 <script>
 /* ===== Cấu hình ===== */
 const CFG={
- WS:'wss://tiktok-live-overlay-tamduc.onrender.com',
+ WS:(location.hostname==='localhost'||location.protocol==='file:')?'ws://localhost:8765':'wss://tiktok-live-overlay-tamduc.onrender.com',
  GOLD_TO_TAMDUC:50,        // 1 vàng = 50 điểm Tâm Đức
  LIKES_TO_FILL:10,         // số lượt tim để đầy thanh tim
  RITUAL_MS:5000,           // thời gian đứng thắp hương
@@ -126,8 +133,8 @@ const hearts=new Map(); // uid -> lượt tim đang tích (tối đa LIKES_TO_FI
 const used=new Set();
 const COLORS=['#7aa0c8','#c88a7a','#8ab38a','#c8b27a','#a98ac8','#7ac8c0','#c87a9e'];
 // Lưới chỗ quỳ (30 chỗ): hàng sau nhỏ/xa, hàng trước lớn/gần. Chừa khoảng trống phía trên cho lư hương.
-const SLOTS=[];for(let r=0;r<6;r++){const n=3+Math.min(r,3);for(let c=0;c<n;c++){
- const k=r/5;SLOTS.push({x:50+((c+.5)/n-.5)*(26+k*62),y:63+k*32,s:.55+k*.6});}}
+const SLOTS=[];for(let r=0;r<5;r++){const n=4+r;for(let c=0;c<n;c++){
+ const k=r/4;SLOTS.push({x:50+((c+.5)/n-.5)*(34+k*60),y:59+k*38,s:.8+k*.45});}}
 const MAX=Math.min(CFG.MAX_FIGURES,SLOTS.length);
 const FILL=CFG.LIKES_TO_FILL;
 
@@ -146,22 +153,23 @@ function spawn(uid,name){
  el.querySelector('.n').textContent=name;$('people').appendChild(el);
  f={el,sc:el.querySelector('.sc'),bar:el.querySelector('.hb'),slot,t:0,rit:false};figs.set(uid,f);
  updateBar(f,uid);
- if((hearts.get(uid)||0)>=FILL)setTimeout(()=>ritual(uid),700); // đã đủ tim từ trước khi có hình
+ const qi=gq.findIndex(g=>g.uid===uid);if(qi>=0)gq.splice(qi,1);          // đang xếp hàng làm khách -> giờ đã có chỗ quỳ
+ if((hearts.get(uid)||0)>=FILL&&!guests.has(uid))setTimeout(()=>ritual(uid),700); // đã đủ tim từ trước khi có hình
  return f;
 }
 function say(f,text){
- const bx=f.el.querySelector('.bx'),b=document.createElement('div');b.className='b';b.textContent=text.slice(0,60);
+ const bx=f.el.querySelector('.bx'),b=document.createElement('div');b.className='b';b.textContent=text.slice(0,32);
  bx.replaceChildren(b);f.el.classList.remove('bow');void f.el.offsetWidth;f.el.classList.add('bow');
  clearTimeout(f.t);f.t=setTimeout(()=>bx.replaceChildren(),CFG.BUBBLE_MS);
 }
 
 /* ===== Thả tim -> đầy thanh -> đi thắp hương ===== */
-let litCount=0,spotN=0;const SPOTS=[44,50,56];
+let litCount=0,spotN=0;const SPOTS=[36,50,64];
 function ritual(uid){
  const f=figs.get(uid);if(!f||f.rit)return;f.rit=true;
  const s=SLOTS[f.slot],x=SPOTS[spotN++%3];
  f.el.classList.add('walk');f.el.style.zIndex=80;
- f.el.style.left=x+'%';f.el.style.top='57%';f.sc.style.transform='scale(1)';   // đi tới trước lư hương
+ f.el.style.left=x+'%';f.el.style.top='49%';f.sc.style.transform='scale(1)';   // đi tới trước lư hương
  setTimeout(()=>{                                                              // đã tới nơi: thắp hương
   if(figs.get(uid)!==f)return;
   litCount++;$('burner').classList.add('lit');say(f,'Thắp nén hương');
@@ -175,9 +183,31 @@ function ritual(uid){
   },CFG.RITUAL_MS);
  },1200);
 }
-function addHearts(uid,n){
+/* Khách thắp hương: người thả tim đủ 10 nhưng không có hình trên thảm.
+   Hiện từ cuối thảm, đi lên lư hương, thắp hương rồi đi xuống biến mất. Không chiếm chỗ trong 30 người. */
+const guests=new Map(),gq=[],MAX_GUESTS=3;
+function queueGuest(uid,name){if(guests.has(uid)||gq.some(g=>g.uid===uid))return;gq.push({uid,name});runGuests();}
+function runGuests(){while(guests.size<MAX_GUESTS&&gq.length){const g=gq.shift();guestRitual(g.uid,g.name);}}
+function guestRitual(uid,name){
+ const el=document.createElement('div'),x=SPOTS[spotN++%3];
+ el.className='p walk guest';el.style.cssText=`left:${x}%;top:106%;z-index:85`;
+ el.innerHTML=`<div class="bx"></div><div class="sc"><div class="hb full"><i style="width:100%"></i></div>${figure(COLORS[uid.length%COLORS.length])}</div><div class="n"></div>`;
+ el.querySelector('.n').textContent=name;$('people').appendChild(el);guests.set(uid,el);
+ void el.offsetWidth;el.classList.add('in');el.style.top='49%';                  // đi lên lư hương
+ setTimeout(()=>{
+  litCount++;$('burner').classList.add('lit');say({el,t:0},'Thắp nén hương');
+  setTimeout(()=>{
+   litCount=Math.max(0,litCount-1);if(!litCount)$('burner').classList.remove('lit');
+   hearts.set(uid,0);const f=figs.get(uid);if(f)updateBar(f,uid);
+   el.classList.remove('in');el.style.top='106%';                               // đi xuống rồi biến mất
+   setTimeout(()=>{el.remove();guests.delete(uid);runGuests();},1700);
+  },CFG.RITUAL_MS);
+ },1800);
+}
+function addHearts(uid,n,name){
  const h=Math.min(FILL,(hearts.get(uid)||0)+n);hearts.set(uid,h);
- const f=figs.get(uid);if(!f)return;        // chưa bình luận: tim được giữ lại tới khi có hình
+ const f=figs.get(uid);
+ if(!f){if(h>=FILL)queueGuest(uid,name||'Khách');return;}   // chưa có hình: đủ tim thì làm khách thắp hương
  updateBar(f,uid);if(h>=FILL&&!f.rit)ritual(uid);
 }
 
@@ -201,7 +231,14 @@ function renderRank(){
 }
 
 /* ===== Xử lý sự kiện (chat / gift / like) ===== */
+const alias=new Map(); // mọi mã định danh -> 1 mã chính, để chat/like/gift của cùng 1 người luôn khớp nhau
+function canon(e){
+ const ids=(e.ids&&e.ids.length)?e.ids:[e.uid];let c=null;
+ for(const i of ids)if(alias.has(i)){c=alias.get(i);break;}
+ c=c||ids[0];ids.forEach(i=>alias.set(i,c));return c;
+}
 function handle(e){
+ e.uid=canon(e);
  if(e.type==='chat'){                      // 1 bình luận = 1 Tâm Đức, hiện hình nhân + nội dung bình luận
   addScore(e.uid,e.name,1,e.avatar);
   say(spawn(e.uid,e.name),e.text||'🙏');
@@ -209,7 +246,7 @@ function handle(e){
   const g=Math.max(0,+e.gold||0)*CFG.GOLD_TO_TAMDUC;addScore(e.uid,e.name,g,e.avatar);
   const f=figs.get(e.uid);if(f)say(f,'+'+g+' tâm đức');
  }else if(e.type==='like'){                // thả tim: tích vào thanh tim
-  addHearts(e.uid,Math.max(1,+e.count||1));
+  addHearts(e.uid,Math.max(1,+e.count||1),e.name);
  }
 }
 
@@ -237,6 +274,7 @@ if(demo){
  setInterval(()=>{const i=Math.random()*names.length|0,r=Math.random(),w={uid:'u'+i,name:names[i]};
   if(r<.2)handle({type:'gift',...w,gold:[1,5,10][Math.random()*3|0]});
   else if(r<.6)handle({type:'chat',...w,text:lines[Math.random()*lines.length|0]});
+  else if(r<.8){const k=Math.random()*4|0;handle({type:'like',uid:'g'+k,name:'Khách '+(k+1),count:5});}
   else handle({type:'like',...w,count:1+(Math.random()*4|0)});},500);
 }else connect();
 renderRank();
